@@ -329,7 +329,7 @@ void InEKF::CorrectRightInvariant(const Eigen::MatrixXd& Z, const Eigen::MatrixX
     // Compute Kalman Gain
     Eigen::MatrixXd PHT = P * H.transpose();
     Eigen::MatrixXd S = H * PHT + N;
-    Eigen::MatrixXd K = PHT * S.inverse();
+    Eigen::MatrixXd K =  PHT * S.llt().solve(Eigen::MatrixXd::Identity(S.rows(), S.cols()));
 
     // Compute state correction vector
     Eigen::VectorXd delta = K*Z;
