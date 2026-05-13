@@ -346,7 +346,7 @@ void InEKF::CorrectRightInvariant(const Eigen::MatrixXd& Z, const Eigen::MatrixX
 
     // Update Covariance
     Eigen::MatrixXd IKH = Eigen::MatrixXd::Identity(dimP,dimP) - K*H;
-    Eigen::MatrixXd P_new = IKH * P * IKH.transpose() + K*N*K.transpose(); // Joseph update form
+    Eigen::MatrixXd P_new = P_new = P - PHT * K.transpose();
 
     // Map from right invariant back to left invariant error
     if (error_type_==ErrorType::LeftInvariant) {
